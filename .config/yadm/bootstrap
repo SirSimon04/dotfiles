@@ -23,3 +23,5 @@ if [ "$system_type" = "Darwin" ]; then
   fi
 
 fi
+
+~/.tmux/plugins/tpm/bin/install_plugins
