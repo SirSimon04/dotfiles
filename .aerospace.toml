@@ -3,7 +3,6 @@
 
 # It's not neceesary to copy all keys to your config.
 # If the key is missing in your config, "default-config.toml" will serve as a fallback
-
 # You can use it to add commands that run after login to macOS user session.
 # 'start-at-login' needs to be 'true' for 'after-login-command' to work
 # Available commands: https://nikitabobko.github.io/AeroSpace/commands
@@ -187,3 +186,8 @@ run = 'move-node-to-workspace 6'
 [[on-window-detected]]
 if.app-id = 'com.apple.mail'
 run = 'move-node-to-workspace 6'
+
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = 'move-node-to-workspace 3'
+

@@ -154,3 +154,6 @@ alias antlr4='java -Xmx500M -cp "/usr/local/lib/antlr-4.13.1-complete.jar:$CLASS
 alias grun='java -Xmx500M -cp "/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH" org.antlr.v4.gui.TestRig'
 
 source <(fzf --zsh)
+
+# load secrets
+source ~/.zsh_env_vars
