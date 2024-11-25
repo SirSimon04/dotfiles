@@ -191,3 +191,7 @@ run = 'move-node-to-workspace 6'
 if.app-id = 'md.obsidian'
 run = 'move-node-to-workspace 3'
 
+[[on-window-detected]]
+if.app-id = 'net.ankiweb.dtop'
+run = 'move-node-to-workspace 2'
+
