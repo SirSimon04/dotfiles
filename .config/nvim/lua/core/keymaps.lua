@@ -1,3 +1,6 @@
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -103,20 +106,6 @@ vim.keymap.set('n', 'H', '0', { desc = 'Jump to start of Line' })
 vim.keymap.set('n', 'L', '$', { desc = 'Jump to start of Line' })
 
 -- END
-
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
-
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
-vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-})
 
 -- GenAI
 vim.keymap.set({ 'v', 'n' }, '<leader>aa', ':Gen<CR>', { desc = 'Open [A]I-Gen' })
