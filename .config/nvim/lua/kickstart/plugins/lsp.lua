@@ -152,6 +152,7 @@ return { -- LSP Configuration & Plugins
       --
       eslint = {},
       prettier = {},
+      ts_ls = {},
       lua_ls = {
         -- cmd = {...},
         -- filetypes { ...},

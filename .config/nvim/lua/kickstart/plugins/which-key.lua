@@ -39,6 +39,10 @@ return { -- Useful plugin to show you pending keybinds.
       { '<leader>t_', hidden = true },
       { '<leader>w', group = '[W]orkspace' },
       { '<leader>w_', hidden = true },
+      { '<leader>ts', group = '[S]ummary' },
+      { '<leader>ts_', hidden = true },
+      { '<leader>tp', group = 'Output [P]anel' },
+      { '<leader>tp_', hidden = true },
     }
   end,
 }
