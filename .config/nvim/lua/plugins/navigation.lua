@@ -26,7 +26,7 @@ return {
       -- REQUIRED
 
       vim.keymap.set('n', '<leader>ha', function()
-        harpoon:list():append()
+        harpoon:list():add()
       end, { desc = '[A]ppend' })
       vim.keymap.set('n', '<leader>hp', function()
         harpoon:list():prepend()
@@ -41,16 +41,16 @@ return {
         harpoon.ui:toggle_quick_menu(harpoon:list())
       end)
 
-      vim.keymap.set('n', 'mf', function()
+      vim.keymap.set('n', 'me', function()
         harpoon:list():select(1)
       end, { desc = 'Harpoon Index 1' })
-      vim.keymap.set('n', 'md', function()
+      vim.keymap.set('n', 'mi', function()
         harpoon:list():select(2)
       end, { desc = 'Harpoon Index 2' })
       vim.keymap.set('n', 'ms', function()
         harpoon:list():select(3)
       end, { desc = 'Harpoon Index 3' })
-      vim.keymap.set('n', 'ma', function()
+      vim.keymap.set('n', 'mc', function()
         harpoon:list():select(4)
       end, { desc = 'Harpoon Index 4' })
 
