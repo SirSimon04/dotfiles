@@ -182,3 +182,6 @@ vim.keymap.set('n', '<leader>tpt', "<cmd>lua require('neotest').output_panel.tog
 
 -- Lazygit
 vim.keymap.set('n', '<leader>gg', '<cmd>:LazyGit<cr>', { desc = 'Open Lazy[G]it' })
+
+-- Debug
+vim.keymap.set('n', '<leader>de', '<cmd>:lua require("dapui").eval()<cr>', { desc = 'Evaluate' })

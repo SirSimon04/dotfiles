@@ -16,6 +16,15 @@ return {
       -- 'leoluz/nvim-dap-go',
       'mxsdev/nvim-dap-vscode-js',
     },
+    keys = {
+      {
+        '<leader>du',
+        function()
+          require('dapui').toggle {}
+        end,
+        desc = 'Dap UI',
+      },
+    },
     config = function()
       local dap = require 'dap'
       local dapui = require 'dapui'
@@ -77,8 +86,6 @@ return {
       dap.listeners.before.event_terminated['dapui_config'] = dapui.close
       dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
-      -- Install golang specific config
-      -- require('dap-go').setup()
       require('dap-vscode-js').setup {
         -- node_path = "node", -- Path of node executable. Defaults to $NODE_PATH, and then "node"
         debugger_path = vim.fn.stdpath 'data' .. '/lazy/vscode-js-debug', -- Path to vscode-js-debug installation.
@@ -107,14 +114,14 @@ return {
             processId = require('dap.utils').pick_process,
             cwd = '${workspaceFolder}',
           },
-          {
-            type = 'pwa-chrome',
-            request = 'launch',
-            name = 'Start Chrome with "localhost"',
-            url = 'http://localhost:3000',
-            webRoot = '${workspaceFolder}',
-            userDataDir = '${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir',
-          },
+          -- {
+          --   type = 'pwa-chrome',
+          --   request = 'launch',
+          --   name = 'Start Chrome with "localhost"',
+          --   url = 'http://localhost:3000',
+          --   webRoot = '${workspaceFolder}',
+          --   userDataDir = '${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir',
+          -- },
         }
       end
     end,
