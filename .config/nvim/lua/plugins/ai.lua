@@ -17,7 +17,7 @@ return {
       }
     end,
   },
-  {
-    'github/copilot.vim',
-  },
+  -- {
+  --   'github/copilot.vim',
+  -- },
 }
