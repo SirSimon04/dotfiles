@@ -18,6 +18,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
 --
+
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
@@ -25,86 +26,87 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 -- IMPORTANT: the following keybindings come in two formats.
 -- First is with qwerty keyboard, second with noted layout.
 -- Only use one
+local layout = os.getenv 'KEYBOARD_LAYOUT'
 
+if layout == 'NOTED' then
+  -- hjkl movements
+  vim.keymap.set('n', 't', 'j')
+  vim.keymap.set('n', 'n', 'k')
+  vim.keymap.set('n', 'd', 'h')
+  vim.keymap.set('n', 'r', 'l')
+
+  vim.keymap.set('v', 't', 'j')
+  vim.keymap.set('v', 'n', 'k')
+  vim.keymap.set('v', 'd', 'h')
+  vim.keymap.set('v', 'r', 'l')
+
+  vim.keymap.set('n', 'D', '0', { desc = 'Jump to start of Line' })
+  vim.keymap.set('n', 'R', '$', { desc = 'Jump to start of Line' })
+
+  -- remaps from d to k
+  -- Remap 'k' to 'd'
+  vim.keymap.set('n', 'k', 'd') -- Normal mode: k to d
+  vim.keymap.set('n', 'K', 'D') -- Normal mode: K to D
+  vim.keymap.set('v', 'k', 'd') -- Visual mode: k to d
+  vim.keymap.set('v', 'K', 'D') -- Visual mode: K to D
+  vim.keymap.set('n', 'kk', 'dd') -- Normal mode: kk to dd
+  vim.keymap.set('x', 'k', 'd') -- Visual selection mode: k to d
+
+  -- Add more combinations as necessary
+  vim.keymap.set('n', 'k$', 'd$') -- Normal mode: k$ to d$
+  vim.keymap.set('n', 'kt', 'dt') -- Normal mode: kt to dt
+  vim.keymap.set('v', 'k$', 'd$') -- Visual mode: k$ to d$
+  vim.keymap.set('v', 'kt', 'dt') -- Visual mode: kt to dt
+
+  -- Remap 'l' to 'r'
+  vim.keymap.set('n', 'l', 'r') -- Normal mode: l to r
+  vim.keymap.set('n', 'L', 'R') -- Normal mode: L to R
+  vim.keymap.set('v', 'l', 'r') -- Visual mode: l to r
+  vim.keymap.set('v', 'L', 'R') -- Visual mode: L to R
+  vim.keymap.set('n', 'll', 'rr') -- Normal mode: ll to rr
+  vim.keymap.set('x', 'l', 'r') -- Visual selection mode: l to r
+
+  -- Add more combinations as necessary
+  vim.keymap.set('n', 'l$', 'r$') -- Normal mode: l$ to r$
+  vim.keymap.set('n', 'lt', 'rt') -- Normal mode: lt to rt
+  vim.keymap.set('v', 'l$', 'r$') -- Visual mode: l$ to r$
+  vim.keymap.set('v', 'lt', 'rt') -- Visual mode: lt to rt
+
+  -- Window navigation
+  vim.keymap.set('n', '<C-d>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+  vim.keymap.set('n', '<C-t>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+  vim.keymap.set('n', '<C-n>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+  vim.keymap.set('n', '<C-r>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+  -- Leave insert mode
+  vim.keymap.set('i', 'tn', '<ESC>', { desc = 'Leave Insert Mode with tn' })
+  vim.keymap.set('i', 'tN', '<ESC>', { desc = 'Leave Insert Mode with tN' })
+
+  -- Start and End of Line
+  vim.keymap.set('n', 'H', '0', { desc = 'Jump to start of Line' })
+  vim.keymap.set('n', 'L', '$', { desc = 'Jump to start of Line' })
+else
+  --
+  -- Use CTRL+<hjkl> to switch between windows
+
+  -- See `:help wincmd` for a list of all window commands
+  vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+  vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+  vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+  vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+  -- Leave insert mode
+  vim.keymap.set('i', 'jk', '<ESC>', { desc = 'Leave Insert Mode with jk' })
+  vim.keymap.set('i', 'jK', '<ESC>', { desc = 'Leave Insert Mode with jK' })
+
+  -- Start and End of Line
+  vim.keymap.set('n', 'H', '0', { desc = 'Jump to start of Line' })
+  vim.keymap.set('n', 'L', '$', { desc = 'Jump to start of Line' })
+end
 -- First
--- Keybinds to make split navigation easier.
--- Use CTRL+<hjkl> to switch between windows
---
--- -- See `:help wincmd` for a list of all window commands
--- vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
--- vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
--- vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
--- vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
---
--- -- Leave insert mode
--- vim.keymap.set('i', 'jk', '<ESC>', { desc = 'Leave Insert Mode with jk' })
--- vim.keymap.set('i', 'jK', '<ESC>', { desc = 'Leave Insert Mode with jK' })
---
--- -- Start and End of Line
--- vim.keymap.set('n', 'H', '0', { desc = 'Jump to start of Line' })
--- vim.keymap.set('n', 'L', '$', { desc = 'Jump to start of Line' })
 
 -- second
 --
--- specific bindings for moving with noted
---
--- hjkl movements
-vim.keymap.set('n', 't', 'j')
-vim.keymap.set('n', 'n', 'k')
-vim.keymap.set('n', 'd', 'h')
-vim.keymap.set('n', 'r', 'l')
-
-vim.keymap.set('v', 't', 'j')
-vim.keymap.set('v', 'n', 'k')
-vim.keymap.set('v', 'd', 'h')
-vim.keymap.set('v', 'r', 'l')
-
-vim.keymap.set('n', 'D', '0', { desc = 'Jump to start of Line' })
-vim.keymap.set('n', 'R', '$', { desc = 'Jump to start of Line' })
-
--- remaps from d to k
--- Remap 'k' to 'd'
-vim.keymap.set('n', 'k', 'd') -- Normal mode: k to d
-vim.keymap.set('n', 'K', 'D') -- Normal mode: K to D
-vim.keymap.set('v', 'k', 'd') -- Visual mode: k to d
-vim.keymap.set('v', 'K', 'D') -- Visual mode: K to D
-vim.keymap.set('n', 'kk', 'dd') -- Normal mode: kk to dd
-vim.keymap.set('x', 'k', 'd') -- Visual selection mode: k to d
-
--- Add more combinations as necessary
-vim.keymap.set('n', 'k$', 'd$') -- Normal mode: k$ to d$
-vim.keymap.set('n', 'kt', 'dt') -- Normal mode: kt to dt
-vim.keymap.set('v', 'k$', 'd$') -- Visual mode: k$ to d$
-vim.keymap.set('v', 'kt', 'dt') -- Visual mode: kt to dt
-
--- Remap 'l' to 'r'
-vim.keymap.set('n', 'l', 'r') -- Normal mode: l to r
-vim.keymap.set('n', 'L', 'R') -- Normal mode: L to R
-vim.keymap.set('v', 'l', 'r') -- Visual mode: l to r
-vim.keymap.set('v', 'L', 'R') -- Visual mode: L to R
-vim.keymap.set('n', 'll', 'rr') -- Normal mode: ll to rr
-vim.keymap.set('x', 'l', 'r') -- Visual selection mode: l to r
-
--- Add more combinations as necessary
-vim.keymap.set('n', 'l$', 'r$') -- Normal mode: l$ to r$
-vim.keymap.set('n', 'lt', 'rt') -- Normal mode: lt to rt
-vim.keymap.set('v', 'l$', 'r$') -- Visual mode: l$ to r$
-vim.keymap.set('v', 'lt', 'rt') -- Visual mode: lt to rt
-
--- Window navigation
-vim.keymap.set('n', '<C-d>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-t>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-n>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-r>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-
--- Leave insert mode
-vim.keymap.set('i', 'tn', '<ESC>', { desc = 'Leave Insert Mode with tn' })
-vim.keymap.set('i', 'tN', '<ESC>', { desc = 'Leave Insert Mode with tN' })
-
--- Start and End of Line
-vim.keymap.set('n', 'H', '0', { desc = 'Jump to start of Line' })
-vim.keymap.set('n', 'L', '$', { desc = 'Jump to start of Line' })
-
 -- END
 
 -- GenAI
