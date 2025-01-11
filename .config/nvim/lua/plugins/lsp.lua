@@ -53,6 +53,7 @@ return { -- LSP Configuration & Plugins
           },
         },
       },
+      tinymist = {},
     }
 
     -- Ensure the servers and tools above are installed
