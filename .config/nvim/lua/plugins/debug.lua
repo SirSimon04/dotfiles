@@ -1,3 +1,5 @@
+local js_based_languages = { 'typescript', 'javascript', 'typescriptreact' }
+
 return {
   {
     'mfussenegger/nvim-dap',
@@ -15,6 +17,16 @@ return {
       -- Add your own debuggers here
       -- 'leoluz/nvim-dap-go',
       'mxsdev/nvim-dap-vscode-js',
+
+      {
+        'microsoft/vscode-js-debug',
+        version = '1.x',
+        build = 'npm i && npm run compile vsDebugServerBundle && mv dist out',
+      },
+      {
+        'Joakker/lua-json5',
+        build = './install.sh',
+      },
     },
     keys = {
       {
@@ -48,7 +60,17 @@ return {
       vim.fn.sign_define('DapBreakpoint', { text = '🔴', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
 
       -- Basic debugging keymaps, feel free to change to your liking!
-      vim.keymap.set('n', '<leader>dc', dap.continue, { desc = 'Debug: Start/Continue' })
+      vim.keymap.set('n', '<leader>dc', function()
+        if vim.fn.filereadable '.vscode/launch.json' then
+          local dap_vscode = require 'dap.ext.vscode'
+          dap_vscode.load_launchjs(nil, {
+            ['pwa-node'] = js_based_languages,
+            ['chrome'] = js_based_languages,
+            ['pwa-chrome'] = js_based_languages,
+          })
+        end
+        require('dap').continue()
+      end, { desc = 'Debug: Start/Continue' })
       vim.keymap.set('n', '<leader>di', dap.step_into, { desc = 'Debug: Step Into' })
       vim.keymap.set('n', '<leader>do', dap.step_over, { desc = 'Debug: Step Over' })
       vim.keymap.set('n', '<leader>da', dap.step_out, { desc = 'Debug: Step Out' })
@@ -86,17 +108,27 @@ return {
       dap.listeners.before.event_terminated['dapui_config'] = dapui.close
       dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
-      require('dap-vscode-js').setup {
-        -- node_path = "node", -- Path of node executable. Defaults to $NODE_PATH, and then "node"
-        debugger_path = vim.fn.stdpath 'data' .. '/lazy/vscode-js-debug', -- Path to vscode-js-debug installation.
-        -- debugger_cmd = { "extension" }, -- Command to use to launch the debug server. Takes precedence over `node_path` and `debugger_path`.
-        adapters = { 'chrome', 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost', 'node', 'chrome' }, -- which adapters to register in nvim-dap
-        -- log_file_path = "(stdpath cache)/dap_vscode_js.log" -- Path for file logging
-        -- log_file_level = false -- Logging level for output to file. Set to false to disable file logging.
-        -- log_console_level = vim.log.levels.ERROR -- Logging level for output to console. Set to false to disable console output.
+      dap.adapters['pwa-node'] = {
+        type = 'server',
+        host = 'localhost',
+        port = '${port}',
+        executable = {
+          command = 'js-debug-adapter',
+          args = {
+            '${port}',
+          },
+        },
       }
 
-      local js_based_languages = { 'typescript', 'javascript', 'typescriptreact' }
+      -- require('dap-vscode-js').setup {
+      --   -- node_path = "node", -- Path of node executable. Defaults to $NODE_PATH, and then "node"
+      --   debugger_path = vim.fn.stdpath 'data' .. '/lazy/vscode-js-debug', -- Path to vscode-js-debug installation.
+      --   -- debugger_cmd = { "extension" }, -- Command to use to launch the debug server. Takes precedence over `node_path` and `debugger_path`.
+      --   adapters = { 'chrome', 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost', 'node', 'chrome' }, -- which adapters to register in nvim-dap
+      --   -- log_file_path = "(stdpath cache)/dap_vscode_js.log" -- Path for file logging
+      --   -- log_file_level = false -- Logging level for output to file. Set to false to disable file logging.
+      --   -- log_console_level = vim.log.levels.ERROR -- Logging level for output to console. Set to false to disable console output.
+      -- }
 
       for _, language in ipairs(js_based_languages) do
         require('dap').configurations[language] = {
