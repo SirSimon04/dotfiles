@@ -74,9 +74,9 @@ if layout == 'NOTED' then
 
   -- Window navigation
   vim.keymap.set('n', '<C-d>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-  vim.keymap.set('n', '<C-t>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-  vim.keymap.set('n', '<C-n>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-  vim.keymap.set('n', '<C-r>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+  vim.keymap.set('n', '<C-r>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+  vim.keymap.set('n', '<C-t>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+  vim.keymap.set('n', '<C-n>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
   -- Leave insert mode
   vim.keymap.set('i', 'tn', '<ESC>', { desc = 'Leave Insert Mode with tn' })
