@@ -85,6 +85,8 @@ if layout == 'NOTED' then
   -- Start and End of Line
   vim.keymap.set('n', 'H', '0', { desc = 'Jump to start of Line' })
   vim.keymap.set('n', 'L', '$', { desc = 'Jump to start of Line' })
+
+  vim.keymap.set('n', '<C-u>', '<C-r>', { desc = 'Revert last undo' })
 else
   --
   -- Use CTRL+<hjkl> to switch between windows
@@ -187,3 +189,7 @@ vim.keymap.set('n', '<leader>gg', '<cmd>:LazyGit<cr>', { desc = 'Open Lazy[G]it'
 
 -- Debug
 vim.keymap.set('n', '<leader>de', '<cmd>:lua require("dapui").eval()<cr>', { desc = 'Evaluate' })
+
+-- Navigate Quickfix lis
+vim.keymap.set('n', '[q', '<cmd>:cprev<cr>', { desc = 'Previous [Q]uickfix item' })
+vim.keymap.set('n', ']q', '<cmd>:cnext<cr>', { desc = 'Next [Q]uickfix item' })
