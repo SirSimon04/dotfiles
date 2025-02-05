@@ -99,6 +99,44 @@ return {
             disconnect = '⏏',
           },
         },
+        layouts = {
+          {
+            elements = {
+              {
+                id = 'scopes',
+                size = 0.25,
+              },
+              {
+                id = 'breakpoints',
+                size = 0.25,
+              },
+              -- {
+              --   id = 'stacks',
+              --   size = 0.25,
+              -- },
+              {
+                id = 'watches',
+                size = 0.25,
+              },
+            },
+            position = 'left',
+            size = 40,
+          },
+          {
+            elements = {
+              {
+                id = 'repl',
+                size = 0.42,
+              },
+              {
+                id = 'console',
+                size = 0.58,
+              },
+            },
+            position = 'bottom',
+            size = 15,
+          },
+        },
       }
 
       -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
@@ -145,6 +183,21 @@ return {
             name = 'Attach',
             processId = require('dap.utils').pick_process,
             cwd = '${workspaceFolder}',
+          },
+          {
+            type = 'pwa-node',
+            request = 'launch',
+            name = 'npm run start',
+            cwd = '${workspaceFolder}',
+            runtimeExecutable = 'npm',
+            runtimeArgs = { 'run', 'start' },
+            skipFiles = { '<node_internals>/**' },
+            console = 'integratedTerminal',
+          },
+          {
+            type = 'pwa-node',
+            request = 'launch',
+            name = '------------------ Below are loaded from .vscode/launch.json ------------------',
           },
           -- {
           --   type = 'pwa-chrome',
