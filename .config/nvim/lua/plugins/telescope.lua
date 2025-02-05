@@ -74,12 +74,44 @@ return { -- Fuzzy Finder (files, lsp, etc)
         opts = {
           hidden = true,
           no_ignore = true,
+          file_ignore_patterns = {
+            '%.obsidian/', -- Exclude .obsidian folder
+            '%.git/', -- Exclude .git folders
+            '/git/', -- Exclude git folders (without dot)
+          },
         }
       else
         opts = {}
       end
 
       require('telescope.builtin').find_files(opts)
+    end
+
+    local function smart_find_grep()
+      local pwd = vim.fn.getcwd()
+
+      local opts = {}
+      if string.find(pwd, 'obsidian%-main') then
+        opts = {
+          additional_args = function()
+            return {
+              '--hidden',
+              '--no-ignore',
+              '--glob=!.obsidian/**', -- Exclude .obsidian folder
+              '--glob=!**/.git/**', -- Exclude all .git folders
+              '--glob=!**/git/**', -- Exclude all git folders (without dot)
+            }
+          end,
+          -- Add any other options you want for Obsidian vaults
+        }
+      else
+        -- Default options for other directories
+        opts = {
+          -- Add any default options you want here
+        }
+      end
+
+      require('telescope.builtin').live_grep(opts)
     end
 
     -- See `:help telescope.builtin`
@@ -90,7 +122,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     vim.keymap.set('n', '<leader>sf', smart_find_files, { desc = '[S]earch [F]iles' })
     vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
     vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-    vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+    vim.keymap.set('n', '<leader>sg', smart_find_grep, { desc = '[S]earch by [G]rep' })
     vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
     vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
     vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })

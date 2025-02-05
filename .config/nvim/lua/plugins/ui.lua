@@ -98,6 +98,20 @@ return {
     messages = {
       enabled = false,
     },
+    routes = {
+      {
+        filter = {
+          event = 'msg_show',
+          kind = '',
+        },
+      },
+    },
+    message = {
+      enabled = false,
+    },
+    notify = {
+      enabled = false,
+    },
     dependencies = {
       -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
       'MunifTanjim/nui.nvim',
@@ -106,5 +120,11 @@ return {
       --   If not available, we use `mini` as the fallback
       'rcarriga/nvim-notify',
     },
+  },
+  {
+    'nvzone/typr',
+    dependencies = 'nvzone/volt',
+    opts = {},
+    cmd = { 'Typr', 'TyprStats' },
   },
 }

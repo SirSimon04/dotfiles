@@ -11,6 +11,7 @@ return {
   { import = 'plugins.languages' },
   { import = 'plugins.test' },
   { import = 'plugins.navigation' },
+  { import = 'plugins.obsidian' },
   {
     'jsongerber/thanks.nvim',
     config = function()
