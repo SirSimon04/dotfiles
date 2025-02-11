@@ -157,3 +157,9 @@ source <(fzf --zsh)
 
 # load secrets
 source ~/.zsh_env_vars
+
+# goose
+export PATH="/Users/simon/.local/bin:$PATH"
+
+# magick
+export DYLD_FALLBACK_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_FALLBACK_LIBRARY_PATH"
