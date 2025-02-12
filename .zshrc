@@ -163,3 +163,5 @@ export PATH="/Users/simon/.local/bin:$PATH"
 
 # magick
 export DYLD_FALLBACK_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_FALLBACK_LIBRARY_PATH"
+
+. "$HOME/.cargo/env"

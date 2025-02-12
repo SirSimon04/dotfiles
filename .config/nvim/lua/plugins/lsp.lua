@@ -54,15 +54,7 @@ return { -- LSP Configuration & Plugins
         },
       },
       tinymist = {},
-      marksman = {
-        settings = {
-          ['marksman'] = {
-            core = {
-              title_from_heading = false,
-            },
-          },
-        },
-      },
+      marksman = {},
     }
 
     -- Ensure the servers and tools above are installed
