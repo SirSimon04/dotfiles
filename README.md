@@ -9,4 +9,4 @@ Bootstrap script installs submodules and everything from Brew.
 - oh my zsh
 - Brewfile
 
-### This is managed by [_yadm_](https://yadm.io/docs/overview).
+### This is managed with [_yadm_](https://yadm.io/docs/overview).
