@@ -2,6 +2,8 @@ return {
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
+    lazy = true,
+    event = 'BufReadPre',
     opts = {
       signs = {
         add = { text = '+' },
@@ -14,6 +16,8 @@ return {
   },
   {
     'f-person/git-blame.nvim',
+    lazy = true,
+    event = 'BufReadPre',
     config = function()
       require('gitblame').setup {
         enabled = true,
@@ -27,6 +31,7 @@ return {
   },
   {
     'kdheepak/lazygit.nvim',
+    lazy = true,
     cmd = {
       'LazyGit',
       'LazyGitConfig',

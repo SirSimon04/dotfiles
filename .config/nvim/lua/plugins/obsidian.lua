@@ -2,17 +2,20 @@ return {
   {
     'okuuva/auto-save.nvim',
     ft = 'markdown',
+    lazy = true, -- Lazy load Obsidian.nvim
     opts = {},
   },
 
   {
     'bullets-vim/bullets.vim',
+    lazy = true, -- Lazy load Obsidian.nvim
     ft = 'markdown',
   },
 
   {
     'iamcco/markdown-preview.nvim',
     cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    lazy = true, -- Lazy load Obsidian.nvim
     ft = { 'markdown' },
     build = function()
       vim.fn['mkdp#util#install']()
@@ -23,40 +26,29 @@ return {
     '3rd/image.nvim',
     build = false, -- so that it doesn't build the rock https://github.com/3rd/image.nvim/issues/91#issuecomment-2453430239
     opts = {
-      -- backend = 'ueberzug',
       processor = 'magick_cli',
       download_remote_images = false,
       only_render_image_at_cursor = false,
-      -- integrations = {
-      --   markdown = {
-      --     resolve_image_path = function(document_path, image_path, fallback)
-      --       local working_dir = vim.fn.getcwd()
-      --       -- Format image path for Obsidian notes
-      --       if working_dir:find('obsidian-main', 1, true) then
-      --         return working_dir .. '/' .. image_path
-      --       end
-      --       -- Fallback to the default behavior
-      --       return fallback(document_path, image_path)
-      --     end,
-      --   },
-      -- },
     },
+    lazy = true, -- Lazy load
   },
 
   {
     'epwalsh/obsidian.nvim',
     version = '*', -- recommended, use latest release instead of latest commit
-    lazy = false,
-    ft = 'markdown',
-    -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
-    event = {
-      -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
-      -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
-      -- refer to `:h file-pattern` for more examples
-      -- 'BufReadPre '
-      --   .. vim.fn.expand '~'
-      --   .. '/Documents/Obsidian/obsidian-main/*.md',
-      -- 'BufNewFile ' .. vim.fn.expand '~' .. '/Documents/Obsidian/obsidian-main/*.md',
+    lazy = true, -- Lazy load Obsidian.nvim
+    ft = 'markdown', -- Only load for Markdown files
+    cmd = {
+      'ObsidianOpen',
+      'ObsidianNew',
+      'ObsidianQuickSwitch',
+      'ObsidianSearch',
+      'ObsidianDailies',
+      'ObsidianPasteImg',
+      'ObsidianTOC',
+      'ObsidianToday',
+      'ObsidianTomorrow',
+      'ObsidianYesterday',
     },
     keys = {
       { '<leader>od', '<cmd>ObsidianDailies<cr>', desc = 'Open dailies picker' },
@@ -68,9 +60,9 @@ return {
       { '<leader>oo', '<cmd>ObsidianOpen<cr>', desc = 'Open note in Obsidian' },
     },
     dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope.nvim',
-      'nvim-treesitter',
+      { 'nvim-lua/plenary.nvim', lazy = true }, -- Lazy load dependencies
+      { 'nvim-telescope/telescope.nvim', lazy = true },
+      { 'nvim-treesitter/nvim-treesitter', lazy = true },
     },
     opts = {
       workspaces = {
@@ -97,6 +89,8 @@ return {
 
   {
     'joshuadanpeterson/typewriter',
+    lazy = true, -- Lazy load Typewriter
+    cmd = { 'TWEnable', 'TWDisable' },
     config = function()
       require('typewriter').setup {
         enable_with_zen_mode = true,
@@ -110,6 +104,8 @@ return {
 
   {
     'folke/zen-mode.nvim',
+    lazy = true, -- Lazy load Zen Mode
+    cmd = { 'ZenMode' },
     opts = {
       on_open = function()
         vim.cmd 'TWEnable'

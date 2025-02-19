@@ -5,29 +5,41 @@ return {
     'mfussenegger/nvim-dap',
     dependencies = {
       'nvim-neotest/nvim-nio',
-      -- Creates a beautiful debugger UI
-      'rcarriga/nvim-dap-ui',
-
-      -- Installs the debug adapters for you
-      'williamboman/mason.nvim',
-      'jay-babu/mason-nvim-dap.nvim',
-
+      {
+        'rcarriga/nvim-dap-ui',
+        lazy = true,
+        config = function()
+          require('dapui').setup()
+        end,
+      }, -- Debugger UI
+      { 'williamboman/mason.nvim', lazy = true }, -- Mason installs DAPs
+      { 'jay-babu/mason-nvim-dap.nvim', lazy = true }, -- Mason for DAP adapters
       'nvim-lua/plenary.nvim',
-
-      -- Add your own debuggers here
-      -- 'leoluz/nvim-dap-go',
-      'mxsdev/nvim-dap-vscode-js',
-
+      { 'mxsdev/nvim-dap-vscode-js', lazy = true }, -- JavaScript/TypeScript debugging
       {
         'microsoft/vscode-js-debug',
         version = '1.x',
         build = 'npm i && npm run compile vsDebugServerBundle && mv dist out',
+        lazy = true,
       },
       {
         'Joakker/lua-json5',
         build = './install.sh',
+        lazy = true,
+      },
+      {
+        'theHamsta/nvim-dap-virtual-text',
+        lazy = true,
+        opts = {
+          virtual_text = {
+            prefix = '',
+            spacing = 4,
+          },
+        },
       },
     },
+    cmd = { 'DapContinue', 'DapToggleBreakpoint', 'DapStepOver', 'DapStepInto', 'DapStepOut', 'DapTerminate' }, -- Lazy load on commands
+
     keys = {
       {
         '<leader>du',
@@ -210,14 +222,5 @@ return {
         }
       end
     end,
-  },
-  {
-    'theHamsta/nvim-dap-virtual-text',
-    opts = {
-      virtual_text = {
-        prefix = '',
-        spacing = 4,
-      },
-    },
   },
 }

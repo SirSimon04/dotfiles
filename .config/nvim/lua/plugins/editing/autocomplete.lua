@@ -1,6 +1,9 @@
 return {
   {
     'saghen/blink.cmp',
+    lazy = true,
+    event = 'InsertEnter', -- Load when entering insert mode
+
     dependencies = 'rafamadriz/friendly-snippets',
 
     version = 'v0.*',

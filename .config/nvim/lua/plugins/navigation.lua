@@ -1,7 +1,10 @@
 return {
   {
     'stevearc/oil.nvim',
+    lazy = true,
+    cmd = 'Oil',
     opts = {},
+    keys = { '-' },
     -- Optional dependencies
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
@@ -16,6 +19,8 @@ return {
   },
   {
     'ThePrimeagen/harpoon',
+    lazy = true,
+    event = 'VeryLazy',
     branch = 'harpoon2',
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
