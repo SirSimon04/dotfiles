@@ -2,7 +2,7 @@ return {
   { import = 'plugins.ui' },
   { import = 'plugins.lsp' },
   { import = 'plugins.treesitter' },
-  { import = 'plugins.telescope' },
+  -- { import = 'plugins.telescope' },
   { import = 'plugins.git' },
   { import = 'plugins.editing' },
   { import = 'plugins.mini' },

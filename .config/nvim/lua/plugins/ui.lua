@@ -31,22 +31,19 @@ return {
         { '<leader>ts_', hidden = true },
         { '<leader>tp', group = 'Output [P]anel' },
         { '<leader>tp_', hidden = true },
+        { '<leader>o', group = '[O]bsidian' },
+        { '<leader>o_', hidden = true },
+        { '<leader>u', group = 'Toggle Groups' },
+        { '<leader>u_', hidden = true },
       }
     end,
   },
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  { 'folke/todo-comments.nvim', event = { 'BufReadPre', 'BufNewFile' }, dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
   { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`
     'catppuccin/nvim',
     priority = 1000, -- make sure to load this before all the other start plugins
     init = function()
       vim.cmd.colorscheme 'catppuccin-frappe'
-
-      -- You can configure highlights by doing something like
-      -- vim.cmd.hi 'Comment gui=none'
     end,
   },
   {
@@ -60,13 +57,6 @@ return {
           theme = 'catppuccin',
         },
         sections = {
-          lualine_x = {
-            {
-              require('noice').api.statusline.mode.get,
-              cond = require('noice').api.statusline.mode.has,
-              color = { fg = '#ff9e64' },
-            },
-          },
           lualine_c = {
             {
               'filename',
@@ -102,23 +92,20 @@ return {
       presets = {
         lsp_doc_border = true,
       },
-    },
-    messages = {
-      enabled = false,
-    },
-    routes = {
-      {
-        filter = {
-          event = 'msg_show',
-          kind = '',
+      notify = {
+        enabled = false,
+      },
+      -- messages = {
+      --   enabled = false,
+      -- },
+      routes = {
+        {
+          filter = {
+            event = 'msg_show',
+            kind = '',
+          },
         },
       },
-    },
-    message = {
-      enabled = false,
-    },
-    notify = {
-      enabled = false,
     },
   },
   {

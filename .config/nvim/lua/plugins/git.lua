@@ -25,23 +25,23 @@ return {
       }
       vim.keymap.set('n', '<leader>go', '<cmd>:GitBlameOpenCommitURL<cr>', { desc = '[O]pen commit in GitHub' })
       vim.keymap.set('n', '<leader>gc', '<cmd>:GitBlameCopySHA<cr>', { desc = '[C]opy SHA of commit under cursor' })
-      vim.keymap.set('n', '<leader>gf', '<cmd>:GitBlameOpenFileURL<cr>', { desc = 'Open current [F]ile in GitHub' })
-      vim.keymap.set('n', '<leader>gu', '<cmd>:GitBlameCopyFileURL<cr>', { desc = 'Copy current file [U]RL' })
+      -- vim.keymap.set('n', '<leader>gf', '<cmd>:GitBlameOpenFileURL<cr>', { desc = 'Open current [F]ile in GitHub' })
+      -- vim.keymap.set('n', '<leader>gu', '<cmd>:GitBlameCopyFileURL<cr>', { desc = 'Copy current file [U]RL' })
     end,
   },
-  {
-    'kdheepak/lazygit.nvim',
-    lazy = true,
-    cmd = {
-      'LazyGit',
-      'LazyGitConfig',
-      'LazyGitCurrentFile',
-      'LazyGitFilter',
-      'LazyGitFilterCurrentFile',
-    },
-    -- optional for floating window border decoration
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-    },
-  },
+  -- {
+  --   'kdheepak/lazygit.nvim',
+  --   lazy = true,
+  --   cmd = {
+  --     'LazyGit',
+  --     'LazyGitConfig',
+  --     'LazyGitCurrentFile',
+  --     'LazyGitFilter',
+  --     'LazyGitFilterCurrentFile',
+  --   },
+  --   -- optional for floating window border decoration
+  --   dependencies = {
+  --     'nvim-lua/plenary.nvim',
+  --   },
+  -- },
 }

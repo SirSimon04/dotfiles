@@ -22,30 +22,30 @@ return {
     end,
   },
 
-  {
-    '3rd/image.nvim',
-    -- lazy = true, -- Lazy load
-    -- ft = 'markdown',
-    build = false, -- so that it doesn't build the rock https://github.com/3rd/image.nvim/issues/91#issuecomment-2453430239
-    opts = {
-      processor = 'magick_cli',
-      download_remote_images = false,
-      only_render_image_at_cursor = false,
-      -- integrations = {
-      --   markdown = {
-      --     resolve_image_path = function(document_path, image_path, fallback)
-      --       local working_dir = vim.fn.getcwd()
-      --       -- Format image path for Obsidian notes
-      --       if working_dir:find('obsidian-main', 1, true) then
-      --         return working_dir .. '/' .. image_path
-      --       end
-      --       -- Fallback to the default behavior
-      --       return fallback(document_path, image_path)
-      --     end,
-      --   },
-      -- },
-    },
-  },
+  -- {
+  --   '3rd/image.nvim',
+  --   -- lazy = true, -- Lazy load
+  --   -- ft = 'markdown',
+  --   build = false, -- so that it doesn't build the rock https://github.com/3rd/image.nvim/issues/91#issuecomment-2453430239
+  --   opts = {
+  --     processor = 'magick_cli',
+  --     download_remote_images = false,
+  --     only_render_image_at_cursor = false,
+  --     -- integrations = {
+  --     --   markdown = {
+  --     --     resolve_image_path = function(document_path, image_path, fallback)
+  --     --       local working_dir = vim.fn.getcwd()
+  --     --       -- Format image path for Obsidian notes
+  --     --       if working_dir:find('obsidian-main', 1, true) then
+  --     --         return working_dir .. '/' .. image_path
+  --     --       end
+  --     --       -- Fallback to the default behavior
+  --     --       return fallback(document_path, image_path)
+  --     --     end,
+  --     --   },
+  --     -- },
+  --   },
+  -- },
 
   {
     'epwalsh/obsidian.nvim',
@@ -75,7 +75,7 @@ return {
     },
     dependencies = {
       { 'nvim-lua/plenary.nvim', lazy = true }, -- Lazy load dependencies
-      { 'nvim-telescope/telescope.nvim', lazy = true },
+      -- { 'nvim-telescope/telescope.nvim', lazy = true },
       { 'nvim-treesitter/nvim-treesitter', lazy = true },
     },
     opts = {
