@@ -24,13 +24,27 @@ return {
 
   {
     '3rd/image.nvim',
+    -- lazy = true, -- Lazy load
+    -- ft = 'markdown',
     build = false, -- so that it doesn't build the rock https://github.com/3rd/image.nvim/issues/91#issuecomment-2453430239
     opts = {
       processor = 'magick_cli',
       download_remote_images = false,
       only_render_image_at_cursor = false,
+      -- integrations = {
+      --   markdown = {
+      --     resolve_image_path = function(document_path, image_path, fallback)
+      --       local working_dir = vim.fn.getcwd()
+      --       -- Format image path for Obsidian notes
+      --       if working_dir:find('obsidian-main', 1, true) then
+      --         return working_dir .. '/' .. image_path
+      --       end
+      --       -- Fallback to the default behavior
+      --       return fallback(document_path, image_path)
+      --     end,
+      --   },
+      -- },
     },
-    lazy = true, -- Lazy load
   },
 
   {
@@ -113,6 +127,27 @@ return {
       on_close = function()
         vim.cmd 'TWDisable'
       end,
+    },
+  },
+
+  {
+    'josephburgess/nvumi',
+    dependencies = { 'folke/snacks.nvim' },
+    lazy = true, -- Lazy load
+    cmd = { 'Nvumi' },
+    opts = {
+      virtual_text = 'newline', -- or "inline"
+      prefix = ' 🚀 ', -- prefix shown before the output
+      date_format = 'iso', -- or: "uk", "us", "long"
+      keys = {
+        run = '<CR>', -- run/refresh calculations
+        reset = 'R', -- reset buffer
+        yank = '<leader>y', -- yank output of current line
+        yank_all = '<leader>Y', -- yank all outputs
+      },
+      -- see below for more on custom conversions/functions
+      custom_conversions = {},
+      custom_functions = {},
     },
   },
 }
