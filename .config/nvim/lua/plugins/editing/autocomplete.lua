@@ -3,14 +3,10 @@ return {
     'saghen/blink.cmp',
     lazy = true,
     event = 'InsertEnter', -- Load when entering insert mode
-
-    dependencies = 'rafamadriz/friendly-snippets',
-
+    -- dependencies = 'rafamadriz/friendly-snippets',
     version = 'v0.*',
-
     opts = {
       keymap = {
-        preset = 'default',
 
         ['<Enter>'] = { 'select_and_accept', 'fallback' },
 
@@ -35,9 +31,19 @@ return {
       sources = {
         default = { 'lsp', 'path', 'snippets', 'buffer' },
       },
-
+      --
       cmdline = {
-        sources = {},
+        completion = {
+          ghost_text = { enabled = false },
+        },
+        enabled = true,
+        -- keymap = {
+        --
+        --   -- ['<Enter>'] = { 'select_and_accept', 'fallback' },
+        --
+        --   ['<Tab>'] = { 'select_next', 'fallback' },
+        --   ['<S-Tab>'] = { 'select_prev', 'fallback' },
+        -- },
       },
 
       -- signature = { enabled = true },
