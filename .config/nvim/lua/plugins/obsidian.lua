@@ -1,5 +1,50 @@
 return {
   {
+    -- dir = '/Users/simon/Documents/Programmieren/notes.nvim',
+    'SirSimon04/notes.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    lazy = true,
+    keys = {
+      { '<leader>od', '<cmd>NotesOpenDailies<CR>', desc = 'Open Dailies' },
+      { '<leader>oy', '<cmd>NotesOpenYesterdayNote<CR>', desc = 'Open Yesterday Note' },
+      { '<leader>ot', '<cmd>NotesOpenTodayNote<CR>', desc = 'Open Today Note' },
+      { '<leader>oz', '<cmd>NotesOpenTomorrowNote<CR>', desc = 'Open Tomorrow Note' },
+      { '<leader>obo', '<cmd>NotesOpenBook<CR>', desc = 'Open Book' },
+      { '<leader>oba', '<cmd>NotesAddNoteToBook<CR>', desc = 'Add Note to Book' },
+      { '<leader>obc', '<cmd>NotesCreateBook<CR>', desc = 'Create Book' },
+      { '<leader>omo', '<cmd>NotesOpenMeeting<CR>', desc = 'Open Meeting Note' },
+      { '<leader>omc', '<cmd>NotesCreateMeeting<CR>', desc = 'Create Meeting Note' },
+    },
+    opts = {
+      books_dir = '~/Documents/Obsidian/obsidian-main/learning/Books/',
+      dailies_dir = '~/Documents/Obsidian/obsidian-main/work/Journal/Daily/',
+      -- dailies_dir = '~/Documents/Obsidian/test-vault-plugin/Dailynotes/',
+      -- books_dir = '~/Documents/Obsidian/test-vault-plugin/Books/',
+      templates = {
+        daily = '~/Documents/Obsidian/obsidian-main/work/templates/daily.md',
+        -- book = '~/Documents/Obsidian/test-vault-plugin/templates/book.md',
+      },
+      custom_types = {
+        {
+          name = 'Meeting',
+          dir = '~/Documents/Obsidian/obsidian-main/work/Meetingnotes/',
+          template = '~/Documents/Obsidian/obsidian-main/work/templates/meeting.md',
+          filename = '${date}-${title}',
+        },
+      },
+      environments = {
+        {
+          key = 'PRIVATE',
+          dailies_dir = '~/Documents/Obsidian/obsidian-main/work/Journal/Daily/',
+          templates = {
+            daily = '~/Documents/Obsidian/test-vault-plugin/templates/private_daily.md',
+          },
+        },
+      },
+    },
+  },
+
+  {
     'okuuva/auto-save.nvim',
     ft = 'markdown',
     lazy = true, -- Lazy load Obsidian.nvim
@@ -22,31 +67,6 @@ return {
     end,
   },
 
-  -- {
-  --   '3rd/image.nvim',
-  --   -- lazy = true, -- Lazy load
-  --   -- ft = 'markdown',
-  --   build = false, -- so that it doesn't build the rock https://github.com/3rd/image.nvim/issues/91#issuecomment-2453430239
-  --   opts = {
-  --     processor = 'magick_cli',
-  --     download_remote_images = false,
-  --     only_render_image_at_cursor = false,
-  --     -- integrations = {
-  --     --   markdown = {
-  --     --     resolve_image_path = function(document_path, image_path, fallback)
-  --     --       local working_dir = vim.fn.getcwd()
-  --     --       -- Format image path for Obsidian notes
-  --     --       if working_dir:find('obsidian-main', 1, true) then
-  --     --         return working_dir .. '/' .. image_path
-  --     --       end
-  --     --       -- Fallback to the default behavior
-  --     --       return fallback(document_path, image_path)
-  --     --     end,
-  --     --   },
-  --     -- },
-  --   },
-  -- },
-
   {
     'epwalsh/obsidian.nvim',
     version = '*', -- recommended, use latest release instead of latest commit
@@ -57,25 +77,14 @@ return {
       'ObsidianNew',
       'ObsidianQuickSwitch',
       'ObsidianSearch',
-      'ObsidianDailies',
       'ObsidianPasteImg',
-      'ObsidianTOC',
-      'ObsidianToday',
-      'ObsidianTomorrow',
-      'ObsidianYesterday',
     },
     keys = {
-      { '<leader>od', '<cmd>ObsidianDailies<cr>', desc = 'Open dailies picker' },
       { '<leader>op', '<cmd>ObsidianPasteImg<cr>', desc = 'Paste image from clipboard' },
-      { '<leader>oc', '<cmd>ObsidianTOC<cr>', desc = 'Load table of contents' },
-      { '<leader>ot', '<cmd>ObsidianToday<cr>', desc = "Open/create today's note" },
-      { '<leader>om', '<cmd>ObsidianTomorrow<cr>', desc = "Open/create tomorrow's note" },
-      { '<leader>oy', '<cmd>ObsidianYesterday<cr>', desc = "Open/create yesterday's note" },
       { '<leader>oo', '<cmd>ObsidianOpen<cr>', desc = 'Open note in Obsidian' },
     },
     dependencies = {
       { 'nvim-lua/plenary.nvim', lazy = true }, -- Lazy load dependencies
-      -- { 'nvim-telescope/telescope.nvim', lazy = true },
       { 'nvim-treesitter/nvim-treesitter', lazy = true },
     },
     opts = {
@@ -88,16 +97,9 @@ return {
       attachments = {
         img_folder = 'attachments',
       },
-      daily_notes = {
-        folder = 'work/Journal/Daily',
-      },
     },
     completion = {
       nvim_cmp = false,
-      -- Enables completion using blink.cmp
-      blink = true,
-      -- Trigger completion at 2 chars.
-      min_chars = 1,
     },
   },
 
