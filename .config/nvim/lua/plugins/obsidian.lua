@@ -35,9 +35,10 @@ return {
       environments = {
         {
           key = 'PRIVATE',
-          dailies_dir = '~/Documents/Obsidian/obsidian-main/work/Journal/Daily/',
+          dailies_dir = '~/Documents/obsidian-main/private/Journal/Daily/',
+          books_dir = '~/Documents/obsidian-main/learning/Books/',
           templates = {
-            daily = '~/Documents/Obsidian/test-vault-plugin/templates/private_daily.md',
+            daily = '~/Documents/obsidian-main/private/Templates/Daily Note Template.md',
           },
         },
       },
