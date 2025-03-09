@@ -138,6 +138,7 @@ alias ta="tmux attach"
 alias v="nvim"
 
 alias back='cd "$OLDPWD"'
+alias lg='lazygit'
 
 ZSH_THEME="nord-extended/nord"
 
@@ -167,3 +168,5 @@ export PATH="/Users/simon/.local/bin:$PATH"
 export DYLD_FALLBACK_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_FALLBACK_LIBRARY_PATH"
 
 . "$HOME/.cargo/env"
+
+alias lg="lazygit"
