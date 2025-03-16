@@ -9,9 +9,12 @@ return {
       { '<leader>oy', '<cmd>NotesOpenYesterdayNote<CR>', desc = 'Open Yesterday Note' },
       { '<leader>ot', '<cmd>NotesOpenTodayNote<CR>', desc = 'Open Today Note' },
       { '<leader>oz', '<cmd>NotesOpenTomorrowNote<CR>', desc = 'Open Tomorrow Note' },
-      { '<leader>obo', '<cmd>NotesOpenBook<CR>', desc = 'Open Book' },
-      { '<leader>oba', '<cmd>NotesAddNoteToBook<CR>', desc = 'Add Note to Book' },
-      { '<leader>obc', '<cmd>NotesCreateBook<CR>', desc = 'Create Book' },
+      { '<leader>obo', '<cmd>NotesOpenBooks<CR>', desc = 'Open Book' },
+      { '<leader>oba', '<cmd>NotesAddNoteToBooks<CR>', desc = 'Add Note to Book' },
+      { '<leader>obc', '<cmd>NotesCreateBooks<CR>', desc = 'Create Book' },
+      { '<leader>opo', '<cmd>NotesOpenProjects<CR>', desc = 'Open Project' },
+      { '<leader>opa', '<cmd>NotesAddNoteToProjects<CR>', desc = 'Add Note to Project' },
+      { '<leader>opc', '<cmd>NotesCreateProjects<CR>', desc = 'Create Project' },
       { '<leader>omo', '<cmd>NotesOpenMeeting<CR>', desc = 'Open Meeting Note' },
       { '<leader>omc', '<cmd>NotesCreateMeeting<CR>', desc = 'Create Meeting Note' },
     },
@@ -30,6 +33,21 @@ return {
           dir = '~/Documents/Obsidian/obsidian-main/work/Meetingnotes/',
           template = '~/Documents/Obsidian/obsidian-main/work/templates/meeting.md',
           filename = '${date}-${title}',
+        },
+        {
+          name = 'Books',
+          dir = '~/Documents/Obsidian/obsidian-main/learning/Books/',
+          -- template = '~/Documents/Notes/Templates/project.md',
+          filename = '${title}',
+          folder_based = true,
+          numbered = true,
+        },
+        {
+          name = 'Projects',
+          dir = '~/Documents/Obsidian/obsidian-main/learning/Projekte/',
+          -- template = '~/Documents/Notes/Templates/project.md',
+          filename = '${title}',
+          folder_based = true,
         },
       },
       environments = {
@@ -66,42 +84,6 @@ return {
     build = function()
       vim.fn['mkdp#util#install']()
     end,
-  },
-
-  {
-    'epwalsh/obsidian.nvim',
-    version = '*', -- recommended, use latest release instead of latest commit
-    lazy = true, -- Lazy load Obsidian.nvim
-    ft = 'markdown', -- Only load for Markdown files
-    cmd = {
-      'ObsidianOpen',
-      'ObsidianNew',
-      'ObsidianQuickSwitch',
-      'ObsidianSearch',
-      'ObsidianPasteImg',
-    },
-    keys = {
-      { '<leader>op', '<cmd>ObsidianPasteImg<cr>', desc = 'Paste image from clipboard' },
-      { '<leader>oo', '<cmd>ObsidianOpen<cr>', desc = 'Open note in Obsidian' },
-    },
-    dependencies = {
-      { 'nvim-lua/plenary.nvim', lazy = true }, -- Lazy load dependencies
-      { 'nvim-treesitter/nvim-treesitter', lazy = true },
-    },
-    opts = {
-      workspaces = {
-        {
-          name = 'main',
-          path = '~/Documents/Obsidian/obsidian-main',
-        },
-      },
-      attachments = {
-        img_folder = 'attachments',
-      },
-    },
-    completion = {
-      nvim_cmp = false,
-    },
   },
 
   {
@@ -151,6 +133,38 @@ return {
       -- see below for more on custom conversions/functions
       custom_conversions = {},
       custom_functions = {},
+    },
+  },
+
+  {
+    'dfendr/clipboard-image.nvim',
+    lazy = true,
+    keys = {
+      { '<leader>oi', '<cmd>PasteImg<CR>', desc = 'Paste [I]mage from clipboard' },
+    },
+    opts = {
+      default = {
+        img_dir = function()
+          local file_path = vim.fn.expand '%:p'
+          if file_path:match 'learning' then
+            return 'learning/dateien'
+          elseif file_path:match 'work' then
+            return 'work/dateien'
+          else
+            return 'attachments'
+          end
+        end,
+        img_dir_txt = function()
+          local file_path = vim.fn.expand '%:p'
+          if file_path:match 'learning' then
+            return 'learning/dateien'
+          elseif file_path:match 'work' then
+            return 'work/dateien'
+          else
+            return 'attachments'
+          end
+        end,
+      },
     },
   },
 }
