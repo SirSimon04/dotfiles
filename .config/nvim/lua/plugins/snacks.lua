@@ -14,7 +14,7 @@ return {
       enabled = true,
       timeout = 3000,
     },
-    image = { enabled = true },
+    image = { enabled = true, img_dirs = { 'img', 'images', 'assets', 'static', 'public', 'media', 'attachments', 'learning/dateien', 'work/dateien' } },
     picker = {
       enabled = true,
       win = {
