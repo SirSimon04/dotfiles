@@ -122,4 +122,13 @@ return {
     opts = {},
     cmd = { 'Typr', 'TyprStats' },
   },
+
+  {
+    'hedyhli/outline.nvim',
+    lazy = true,
+    cmd = { 'Outline', 'OutlineOpen' },
+    opts = {
+      -- Your setup opts here
+    },
+  },
 }
