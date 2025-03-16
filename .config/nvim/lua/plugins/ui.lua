@@ -7,7 +7,7 @@ return {
 
       -- Document existing key chains
       require('which-key').add {
-        { '<leader>a', group = '[A]I-Gen' },
+        { '<leader>a', group = '[A]I' },
         { '<leader>a_', hidden = true },
         { '<leader>c', group = '[C]ode' },
         { '<leader>c_', hidden = true },
@@ -35,6 +35,8 @@ return {
         { '<leader>o_', hidden = true },
         { '<leader>ob', group = '[B]ooks' },
         { '<leader>ob_', hidden = true },
+        { '<leader>op', group = '[P]rojects' },
+        { '<leader>op_', hidden = true },
         { '<leader>om', group = '[M]eetings' },
         { '<leader>om_', hidden = true },
         { '<leader>u', group = 'Toggle Groups' },
