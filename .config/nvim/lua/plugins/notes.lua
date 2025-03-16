@@ -64,6 +64,20 @@ return {
   },
 
   {
+    'MeanderingProgrammer/render-markdown.nvim',
+    lazy = true,
+    ft = 'markdown',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+    opts = {
+      completions = { lsp = { enabled = true } },
+      heading = {
+        width = 'block',
+        right_pad = 1,
+      },
+    },
+  },
+
+  {
     'okuuva/auto-save.nvim',
     ft = 'markdown',
     lazy = true, -- Lazy load Obsidian.nvim
