@@ -2,186 +2,172 @@ local js_based_languages = { 'typescript', 'javascript', 'typescriptreact' }
 
 return {
   {
+    name = 'nvim-dap',
     'mfussenegger/nvim-dap',
+    lazy = true,
     dependencies = {
-      'nvim-neotest/nvim-nio',
-      {
-        'rcarriga/nvim-dap-ui',
-        lazy = true,
-        config = function()
-          require('dapui').setup()
-        end,
-      }, -- Debugger UI
-      { 'williamboman/mason.nvim', lazy = true }, -- Mason installs DAPs
-      { 'jay-babu/mason-nvim-dap.nvim', lazy = true }, -- Mason for DAP adapters
       'nvim-lua/plenary.nvim',
-      { 'mxsdev/nvim-dap-vscode-js', lazy = true }, -- JavaScript/TypeScript debugging
+      { 'rcarriga/nvim-dap-ui', lazy = true },
+      'nvim-neotest/nvim-nio',
+      { 'williamboman/mason.nvim', lazy = true },
+      { 'jay-babu/mason-nvim-dap.nvim', lazy = true },
+      { 'mxsdev/nvim-dap-vscode-js', lazy = true },
       {
         'microsoft/vscode-js-debug',
         version = '1.x',
-        build = 'npm i && npm run compile vsDebugServerBundle && mv dist out',
+        build = 'npm install && npm run compile vsDebugServerBundle && mv dist out',
         lazy = true,
       },
-      {
-        'Joakker/lua-json5',
-        build = './install.sh',
-        lazy = true,
-      },
+      { 'Joakker/lua-json5', build = './install.sh', lazy = true },
       {
         'theHamsta/nvim-dap-virtual-text',
         lazy = true,
-        opts = {
-          virtual_text = {
-            prefix = '',
-            spacing = 4,
-          },
-        },
+        opts = { virtual_text = { prefix = '', spacing = 4 } },
       },
     },
-    cmd = { 'DapContinue', 'DapToggleBreakpoint', 'DapStepOver', 'DapStepInto', 'DapStepOut', 'DapTerminate' }, -- Lazy load on commands
 
+    -- also lazy‐load on the built-in dap commands:
+    cmd = {
+      'DapContinue',
+      'DapToggleBreakpoint',
+      'DapStepOver',
+      'DapStepInto',
+      'DapStepOut',
+      'DapTerminate',
+    },
+
+    -- and on these <leader>d* keys:
     keys = {
+      {
+        '<leader>db',
+        function()
+          require('lazy').load { plugins = { 'nvim-dap' } }
+          vim.schedule(function()
+            require('dap').toggle_breakpoint()
+          end)
+        end,
+        desc = 'Debug: Toggle Breakpoint',
+      },
       {
         '<leader>du',
         function()
-          require('dapui').toggle {}
+          require('lazy').load { plugins = { 'nvim-dap' } }
+          vim.schedule(function()
+            require('dapui').toggle()
+          end)
         end,
-        desc = 'Dap UI',
+        desc = 'Debug: Toggle DAP UI',
+      },
+      {
+        '<leader>dr',
+        function()
+          require('lazy').load { plugins = { 'nvim-dap' } }
+          vim.schedule(function()
+            require('dapui').toggle()
+          end)
+        end,
+        desc = 'Debug: See last session result',
+      },
+      {
+        '<leader>dc',
+        function()
+          require('lazy').load { plugins = { 'nvim-dap' } }
+          vim.schedule(function()
+            require('dap').continue()
+          end)
+        end,
+        desc = 'Debug: Start/Continue',
+      },
+      {
+        '<leader>di',
+        function()
+          require('lazy').load { plugins = { 'nvim-dap' } }
+          vim.schedule(function()
+            require('dap').step_into()
+          end)
+        end,
+        desc = 'Debug: Step Into',
+      },
+      {
+        '<leader>do',
+        function()
+          require('lazy').load { plugins = { 'nvim-dap' } }
+          vim.schedule(function()
+            require('dap').step_over()
+          end)
+        end,
+        desc = 'Debug: Step Over',
+      },
+      {
+        '<leader>da',
+        function()
+          require('lazy').load { plugins = { 'nvim-dap' } }
+          vim.schedule(function()
+            require('dap').step_out()
+          end)
+        end,
+        desc = 'Debug: Step Out',
+      },
+      {
+        '<leader>dB',
+        function()
+          require('lazy').load { plugins = { 'nvim-dap' } }
+          vim.schedule(function()
+            require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+          end)
+        end,
+        desc = 'Debug: Set conditional Breakpoint',
       },
     },
+
     config = function()
       local dap = require 'dap'
       local dapui = require 'dapui'
 
-      require('mason-nvim-dap').setup {
-        -- Makes a best effort to setup the various debuggers with
-        -- reasonable debug configurations
-        automatic_setup = true,
-
-        -- You can provide additional configuration to the handlers,
-        -- see mason-nvim-dap README for more information
-        handlers = {},
-
-        -- You'll need to check that you have the required things installed
-        -- online, please don't ask me how to install them :)
-        ensure_installed = {
-          -- Update this to ensure that you have the debuggers for the langs you want
-        },
-      }
-
-      vim.fn.sign_define('DapBreakpoint', { text = '🔴', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
-
-      -- Basic debugging keymaps, feel free to change to your liking!
-      vim.keymap.set('n', '<leader>dc', function()
-        if vim.fn.filereadable '.vscode/launch.json' then
-          local dap_vscode = require 'dap.ext.vscode'
-          dap_vscode.load_launchjs(nil, {
-            ['pwa-node'] = js_based_languages,
-            ['chrome'] = js_based_languages,
-            ['pwa-chrome'] = js_based_languages,
-          })
+      -- === patch `continue()` so it first loads your .vscode/launch.json ===
+      do
+        local orig = dap.continue
+        dap.continue = function(...)
+          if vim.fn.filereadable '.vscode/launch.json' == 1 then
+            require('dap.ext.vscode').load_launchjs(nil, {
+              ['pwa-node'] = js_based_languages,
+              ['chrome'] = js_based_languages,
+              ['pwa-chrome'] = js_based_languages,
+            })
+          end
+          return orig(...)
         end
-        require('dap').continue()
-      end, { desc = 'Debug: Start/Continue' })
-      vim.keymap.set('n', '<leader>di', dap.step_into, { desc = 'Debug: Step Into' })
-      vim.keymap.set('n', '<leader>do', dap.step_over, { desc = 'Debug: Step Over' })
-      vim.keymap.set('n', '<leader>da', dap.step_out, { desc = 'Debug: Step Out' })
-      vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
-      vim.keymap.set('n', '<leader>dB', function()
-        dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
-      end, { desc = 'Debug: Set conditional Breakpoint' })
+      end
 
-      -- Dap UI setup
-      -- For more information, see |:help nvim-dap-ui|
-      dapui.setup {
-        -- Set icons to characters that are more likely to work in every terminal.
-        --    Feel free to remove or use ones that you like more! :)
-        --    Don't feel like these are good choices.
-        icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
-        controls = {
-          icons = {
-            pause = '⏸',
-            play = '▶',
-            step_into = '⏎',
-            step_over = '⏭',
-            step_out = '⏮',
-            step_back = 'b',
-            run_last = '▶▶',
-            terminate = '⏹',
-            disconnect = '⏏',
-          },
-        },
-        layouts = {
-          -- {
-          --   elements = {
-          --     {
-          --       id = 'scopes',
-          --       size = 0.25,
-          --     },
-          --     {
-          --       id = 'breakpoints',
-          --       size = 0.25,
-          --     },
-          --     -- {
-          --     --   id = 'stacks',
-          --     --   size = 0.25,
-          --     -- },
-          --     {
-          --       id = 'watches',
-          --       size = 0.25,
-          --     },
-          --   },
-          --   position = 'left',
-          --   size = 40,
-          -- },
-          {
-            elements = {
-              {
-                id = 'repl',
-                size = 0.42,
-              },
-              {
-                id = 'console',
-                size = 0.58,
-              },
-            },
-            position = 'bottom',
-            size = 15,
-          },
-        },
+      -- mason-nvim-dap
+      require('mason-nvim-dap').setup {
+        automatic_setup = true,
+        ensure_installed = {},
+        handlers = {},
       }
 
-      -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
-      vim.keymap.set('n', '<leader>dr', dapui.toggle, { desc = 'Debug: See last session result.' })
+      -- signs
+      vim.fn.sign_define('DapBreakpoint', {
+        text = '🔴',
+        texthl = 'DapBreakpoint',
+        linehl = 'DapBreakpoint',
+        numhl = 'DapBreakpoint',
+      })
 
-      dap.listeners.after.event_initialized['dapui_config'] = dapui.open
-      dap.listeners.before.event_terminated['dapui_config'] = dapui.close
-      dap.listeners.before.event_exited['dapui_config'] = dapui.close
-
+      -- adapter
       dap.adapters['pwa-node'] = {
         type = 'server',
         host = 'localhost',
         port = '${port}',
         executable = {
           command = 'js-debug-adapter',
-          args = {
-            '${port}',
-          },
+          args = { '${port}' },
         },
       }
 
-      -- require('dap-vscode-js').setup {
-      --   -- node_path = "node", -- Path of node executable. Defaults to $NODE_PATH, and then "node"
-      --   debugger_path = vim.fn.stdpath 'data' .. '/lazy/vscode-js-debug', -- Path to vscode-js-debug installation.
-      --   -- debugger_cmd = { "extension" }, -- Command to use to launch the debug server. Takes precedence over `node_path` and `debugger_path`.
-      --   adapters = { 'chrome', 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost', 'node', 'chrome' }, -- which adapters to register in nvim-dap
-      --   -- log_file_path = "(stdpath cache)/dap_vscode_js.log" -- Path for file logging
-      --   -- log_file_level = false -- Logging level for output to file. Set to false to disable file logging.
-      --   -- log_console_level = vim.log.levels.ERROR -- Logging level for output to console. Set to false to disable console output.
-      -- }
-
-      for _, language in ipairs(js_based_languages) do
-        require('dap').configurations[language] = {
+      -- configurations (including your npm→start & placeholder)
+      for _, lang in ipairs(js_based_languages) do
+        dap.configurations[lang] = {
           {
             type = 'pwa-node',
             request = 'launch',
@@ -192,7 +178,7 @@ return {
           {
             type = 'pwa-node',
             request = 'attach',
-            name = 'Attach',
+            name = 'Attach to process',
             processId = require('dap.utils').pick_process,
             cwd = '${workspaceFolder}',
           },
@@ -211,15 +197,49 @@ return {
             request = 'launch',
             name = '------------------ Below are loaded from .vscode/launch.json ------------------',
           },
-          -- {
-          --   type = 'pwa-chrome',
-          --   request = 'launch',
-          --   name = 'Start Chrome with "localhost"',
-          --   url = 'http://localhost:3000',
-          --   webRoot = '${workspaceFolder}',
-          --   userDataDir = '${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir',
-          -- },
         }
+      end
+
+      -- your exact dap-ui.setup:
+      dapui.setup {
+        icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
+        controls = {
+          icons = {
+            pause = '⏸',
+            play = '▶',
+            step_into = '⏎',
+            step_over = '⏭',
+            step_out = '⏮',
+            step_back = 'b',
+            run_last = '▶▶',
+            terminate = '⏹',
+            disconnect = '⏏',
+          },
+        },
+        layouts = {
+          {
+            elements = {
+              { id = 'repl', size = 0.42 },
+              { id = 'console', size = 0.58 },
+            },
+            position = 'bottom',
+            size = 15,
+          },
+        },
+      }
+
+      -- virtual text
+      require('nvim-dap-virtual-text').setup()
+
+      -- dap-ui listeners (all wrapped in vim.schedule)
+      dap.listeners.after.event_initialized['dapui'] = function()
+        vim.schedule(dapui.open)
+      end
+      dap.listeners.before.event_terminated['dapui'] = function()
+        vim.schedule(dapui.close)
+      end
+      dap.listeners.before.event_exited['dapui'] = function()
+        vim.schedule(dapui.close)
       end
     end,
   },

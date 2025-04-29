@@ -64,3 +64,6 @@ vim.opt.scrolloff = 10
 vim.opt.conceallevel = 1
 
 vim.diagnostic.config { virtual_lines = { current_line = true } }
+
+-- 1) Disable dap’s own maps
+vim.g.dap_no_mappings = true

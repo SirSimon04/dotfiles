@@ -137,15 +137,7 @@ vim.keymap.set('n', '<leader>tr', "<cmd>lua require('neotest').run.run()<cr>", {
 -- Run the current file
 vim.keymap.set('n', '<leader>tf', "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<cr>", { desc = 'Run the current [F]ile' })
 
--- Debug the nearest test
-vim.keymap.set('n', '<leader>td', function()
-  local neotest = require 'neotest'
-  if neotest and neotest.run and neotest.run.run then
-    neotest.run.run { strategy = 'dap' }
-  else
-    vim.notify('Neotest is not properly initialized', vim.log.levels.ERROR)
-  end
-end, { desc = 'Neotest: debug nearest test' })
+vim.keymap.set('n', '<leader>td', "<cmd>lua require('neotest').run.run({ strategy = 'dap' })<cr>", { desc = 'Debug the nearest test' })
 
 -- Stop the nearest test
 vim.keymap.set('n', '<leader>tS', "<cmd>lua require('neotest').run.stop()<cr>", { desc = '[S]top the nearest test' })
