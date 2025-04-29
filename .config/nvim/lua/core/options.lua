@@ -62,3 +62,5 @@ vim.opt.scrolloff = 10
 
 -- To render MD
 vim.opt.conceallevel = 1
+
+vim.diagnostic.config { virtual_lines = { current_line = true } }

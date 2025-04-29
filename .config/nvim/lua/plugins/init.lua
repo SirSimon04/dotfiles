@@ -14,6 +14,8 @@ return {
   { import = 'plugins.notes' },
   {
     'jsongerber/thanks.nvim',
+    lazy = true,
+    cmd = { 'ThanksAll' },
     config = function()
       require('thanks').setup {
         plugin_manager = 'lazy',

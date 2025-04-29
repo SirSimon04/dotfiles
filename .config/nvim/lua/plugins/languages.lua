@@ -7,13 +7,13 @@ return {
   {
     'kaarmu/typst.vim',
     ft = 'typst',
-    lazy = false,
+    lazy = true,
   },
   {
     'christoomey/vim-tmux-navigator',
   },
   {
-    'jkeresman01/tmux-switch.nvim',
+    'https://github.com/jkeresman01/tmux-switch.nvim',
     -- 'SirSimon04/tmux-switch.nvim2',
     -- dir = '~/Documents/Programmieren/temp/tmux-switch.nvim2/',
     lazy = true,

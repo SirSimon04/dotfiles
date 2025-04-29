@@ -4,7 +4,7 @@ return {
     lazy = true,
     event = 'InsertEnter', -- Load when entering insert mode
     -- dependencies = 'rafamadriz/friendly-snippets',
-    version = 'v0.*',
+    version = 'v1.*',
     opts = {
       keymap = {
 
@@ -21,6 +21,7 @@ return {
 
         ['<C-n>'] = { 'snippet_forward', 'fallback' },
         ['<C-p>'] = { 'snippet_backward', 'fallback' },
+        ['<C-d>'] = { 'show_documentation' },
       },
 
       appearance = {

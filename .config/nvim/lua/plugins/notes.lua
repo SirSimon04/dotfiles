@@ -17,15 +17,14 @@ return {
       { '<leader>opc', '<cmd>NotesCreateProjects<CR>', desc = 'Create Project' },
       { '<leader>omo', '<cmd>NotesOpenMeeting<CR>', desc = 'Open Meeting Note' },
       { '<leader>omc', '<cmd>NotesCreateMeeting<CR>', desc = 'Create Meeting Note' },
+      { '<leader>ovo', '<cmd>NotesOpenVorlesungen<CR>', desc = 'Open Vorlesung' },
+      { '<leader>ova', '<cmd>NotesAddNoteToVorlesungen<CR>', desc = 'Add Note to Vorlesung' },
+      { '<leader>ovc', '<cmd>NotesCreateVorlesungen<CR>', desc = 'Create Vorlesung' },
     },
     opts = {
-      books_dir = '~/Documents/Obsidian/obsidian-main/learning/Books/',
       dailies_dir = '~/Documents/Obsidian/obsidian-main/work/Journal/Daily/',
-      -- dailies_dir = '~/Documents/Obsidian/test-vault-plugin/Dailynotes/',
-      -- books_dir = '~/Documents/Obsidian/test-vault-plugin/Books/',
       templates = {
         daily = '~/Documents/Obsidian/obsidian-main/work/templates/daily.md',
-        -- book = '~/Documents/Obsidian/test-vault-plugin/templates/book.md',
       },
       custom_types = {
         {
@@ -38,7 +37,7 @@ return {
           name = 'Books',
           dir = '~/Documents/Obsidian/obsidian-main/learning/Books/',
           -- template = '~/Documents/Notes/Templates/project.md',
-          filename = '${title}',
+          filename = '${name}-${title}',
           folder_based = true,
           numbered = true,
         },
@@ -46,8 +45,16 @@ return {
           name = 'Projects',
           dir = '~/Documents/Obsidian/obsidian-main/learning/Projekte/',
           -- template = '~/Documents/Notes/Templates/project.md',
-          filename = '${title}',
+          filename = '${name}-${title}',
           folder_based = true,
+        },
+        {
+          name = 'Vorlesungen',
+          dir = '~/Documents/Obsidian/obsidian-main/learning/DHBW/6.Semester/',
+          -- template = '~/Documents/Notes/Templates/project.md',
+          filename = '${name}-${title}',
+          folder_based = true,
+          numbered = true,
         },
       },
       environments = {
