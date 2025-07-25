@@ -63,7 +63,7 @@ vim.opt.scrolloff = 10
 -- To render MD
 vim.opt.conceallevel = 1
 
-vim.diagnostic.config { virtual_lines = { current_line = true } }
+vim.diagnostic.config { virtual_lines = { current_line = true }, severity_sort = true }
 
 -- 1) Disable dap’s own maps
 vim.g.dap_no_mappings = true

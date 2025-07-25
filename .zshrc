@@ -172,3 +172,7 @@ export DYLD_FALLBACK_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_FALLBACK_LIBRARY_P
 alias lg="lazygit"
 
 eval $(thefuck --alias)
+
+
+export PATH="$PATH":"$HOME/.pub-cache/bin"
+

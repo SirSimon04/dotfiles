@@ -1,5 +1,7 @@
 return { -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
+  lazy = true,
+  event = 'BufRead',
   build = ':TSUpdate',
   dependencies = {
     -- 'nvim-treesitter/nvim-treesitter-context',

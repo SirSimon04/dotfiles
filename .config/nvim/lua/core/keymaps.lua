@@ -192,3 +192,8 @@ vim.keymap.set('n', '<leader>de', '<cmd>:lua require("dapui").eval()<cr>', { des
 -- Navigate Quickfix lis
 vim.keymap.set('n', '[q', '<cmd>:cprev<cr>', { desc = 'Previous [Q]uickfix item' })
 vim.keymap.set('n', ']q', '<cmd>:cnext<cr>', { desc = 'Next [Q]uickfix item' })
+
+vim.api.nvim_create_user_command('Writer', function()
+  vim.cmd 'TWEnable'
+  vim.cmd 'ZenMode'
+end, {})
