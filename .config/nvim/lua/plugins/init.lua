@@ -1,5 +1,6 @@
 return {
   { import = 'plugins.ui' },
+  { import = 'plugins.languages' },
   { import = 'plugins.lsp' },
   { import = 'plugins.treesitter' },
   -- { import = 'plugins.telescope' },
@@ -8,7 +9,6 @@ return {
   { import = 'plugins.mini' },
   { import = 'plugins.debug' },
   { import = 'plugins.ai' },
-  { import = 'plugins.languages' },
   { import = 'plugins.test' },
   { import = 'plugins.navigation' },
   { import = 'plugins.notes' },

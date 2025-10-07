@@ -4,7 +4,6 @@ return {
   {
     name = 'nvim-dap',
     'mfussenegger/nvim-dap',
-    lazy = true,
     dependencies = {
       'nvim-lua/plenary.nvim',
       { 'rcarriga/nvim-dap-ui', lazy = true },
@@ -27,14 +26,14 @@ return {
     },
 
     -- also lazy‐load on the built-in dap commands:
-    cmd = {
-      'DapContinue',
-      'DapToggleBreakpoint',
-      'DapStepOver',
-      'DapStepInto',
-      'DapStepOut',
-      'DapTerminate',
-    },
+    -- cmd = {
+    --   'DapContinue',
+    --   'DapToggleBreakpoint',
+    --   'DapStepOver',
+    --   'DapStepInto',
+    --   'DapStepOut',
+    --   'DapTerminate',
+    -- },
 
     -- and on these <leader>d* keys:
     keys = {
@@ -124,25 +123,31 @@ return {
       local dap = require 'dap'
       local dapui = require 'dapui'
 
+      -- this leads to duplicate loading of configs
+      -- if it doesn't work anymore, put it back in
       -- === patch `continue()` so it first loads your .vscode/launch.json ===
-      do
-        local orig = dap.continue
-        dap.continue = function(...)
-          if vim.fn.filereadable '.vscode/launch.json' == 1 then
-            require('dap.ext.vscode').load_launchjs(nil, {
-              ['pwa-node'] = js_based_languages,
-              ['chrome'] = js_based_languages,
-              ['pwa-chrome'] = js_based_languages,
-            })
-          end
-          return orig(...)
-        end
-      end
+      -- do
+      --   local orig = dap.continue
+      --   dap.continue = function(...)
+      --     if vim.fn.filereadable '.vscode/launch.json' == 1 then
+      --       require('dap.ext.vscode').load_launchjs(nil, {
+      --         ['pwa-node'] = js_based_languages,
+      --         ['chrome'] = js_based_languages,
+      --         ['pwa-chrome'] = js_based_languages,
+      --       })
+      --     end
+      --     return orig(...)
+      --   end
+      -- end
 
       -- mason-nvim-dap
       require('mason-nvim-dap').setup {
         automatic_setup = true,
-        ensure_installed = {},
+        ensure_installed = {
+          'chrome-debug-adapter',
+          'js-debug-adapter',
+          'node-debug2-adapter',
+        },
         handlers = {},
       }
 
@@ -165,7 +170,15 @@ return {
         },
       }
 
-      -- configurations (including your npm→start & placeholder)
+      dap.configurations.java = {
+        {
+          type = 'java',
+          name = 'Debug',
+          request = 'launch',
+          program = '${file}',
+        },
+      }
+
       for _, lang in ipairs(js_based_languages) do
         dap.configurations[lang] = {
           {
@@ -200,7 +213,6 @@ return {
         }
       end
 
-      -- your exact dap-ui.setup:
       dapui.setup {
         icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
         controls = {
@@ -228,10 +240,8 @@ return {
         },
       }
 
-      -- virtual text
       require('nvim-dap-virtual-text').setup()
 
-      -- dap-ui listeners (all wrapped in vim.schedule)
       dap.listeners.after.event_initialized['dapui'] = function()
         vim.schedule(dapui.open)
       end

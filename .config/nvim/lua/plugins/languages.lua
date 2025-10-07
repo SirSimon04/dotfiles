@@ -32,4 +32,5 @@ return {
       sort_by_recent_use = true,
     },
   },
+  'mfussenegger/nvim-jdtls', -- java lsp
 }
